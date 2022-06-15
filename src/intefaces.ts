@@ -6,8 +6,8 @@ import {
 
 interface IInput {
   simbolosSaida: Simbolos;
-  simbolosEntrada: SimboloComProbabilidade[];
-  matriz: MatrizProbabilidade;
+  simbolosEntradaComProb: SimboloComProbabilidade[];
+  matrizCondicional: MatrizProbabilidade;
 }
 
 interface IOutput {

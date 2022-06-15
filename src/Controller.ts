@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 
 import { AppError } from "./AppError";
 import { IExec } from "./intefaces";
-import { SimboloComProbabilidade } from "./types";
+import { MatrizProbabilidade, SimboloComProbabilidade } from "./types";
 
 class Controller {
   private transformToNumber = (value: string): number => {
@@ -30,13 +30,70 @@ class Controller {
     return Number(value);
   };
 
-  private exec: IExec = ({ matriz, simbolosEntrada, simbolosSaida }) => {
+  private exec: IExec = ({
+    matrizCondicional,
+    simbolosEntradaComProb,
+    simbolosSaida,
+  }) => {
+    const matrizProbConjunta: MatrizProbabilidade = [];
+
+    simbolosEntradaComProb.forEach(
+      (entrada: SimboloComProbabilidade, index: number) => {
+        matrizProbConjunta.push(
+          matrizCondicional[index].map(
+            (prob: number) => prob * entrada.probabilidade
+          )
+        );
+      }
+    );
+
+    const simbolosSaidaComProb: SimboloComProbabilidade[] = simbolosSaida.map(
+      (item: string, index: number): SimboloComProbabilidade => ({
+        probabilidade: matrizProbConjunta.reduce(
+          (acc, vetor) => acc + vetor[index],
+          0
+        ),
+        simbolo: item,
+      })
+    );
+
+    const auxProbSaida = Math.round(
+      this.somatorio(
+        simbolosSaidaComProb.map(
+          (item: SimboloComProbabilidade): number => item.probabilidade
+        )
+      )
+    );
+
+    if (auxProbSaida !== 1)
+      throw new AppError(
+        400,
+        `A probabilidade resultante do conjunto de símbolos da saída é diferente de 1. P(Y) = ${auxProbSaida}`
+      );
+
+    const entropiaEntrada = this.entropiaDeProbabilidades(
+      simbolosEntradaComProb.map(
+        ({ probabilidade }: SimboloComProbabilidade): number => probabilidade
+      )
+    );
+
+    const entropiaSaidaObservadaEntrada = simbolosEntradaComProb.reduce(
+      (acc, item, index) =>
+        acc +
+        item.probabilidade *
+          this.entropiaDeProbabilidades(matrizCondicional[index]),
+      0
+    );
+
+    const informacaoMutuaMedia =
+      entropiaEntrada - entropiaSaidaObservadaEntrada;
+
     return {
-      entropiaCondicionalSaida: 0,
-      entropiaConjunta: 0,
-      entropiaEntrada: 0,
-      equivocacaoCanal: 0,
-      informacaoMutuaMedia: 0,
+      entropiaCondicionalSaida: entropiaSaidaObservadaEntrada,
+      entropiaConjunta: entropiaEntrada + entropiaSaidaObservadaEntrada,
+      entropiaEntrada,
+      equivocacaoCanal: entropiaEntrada - informacaoMutuaMedia,
+      informacaoMutuaMedia,
     };
   };
 
@@ -63,9 +120,9 @@ class Controller {
 
   postRoute = async (req: Request, res: Response): Promise<Response> => {
     const {
-      simbolos_entrada_com_prob: simbolosEntradaComProb,
+      simbolos_entrada_com_prob: simbolosEntrada,
       simbolos_saida: simbolosSaida,
-      matriz_prob_condicional: matrizProbab,
+      matriz_prob_condicional: matrizInput,
     } = req.body;
 
     if (
@@ -79,41 +136,41 @@ class Controller {
       );
 
     if (
-      !simbolosEntradaComProb ||
-      !Array.isArray(simbolosEntradaComProb) ||
-      simbolosEntradaComProb.length < 2
+      !simbolosEntrada ||
+      !Array.isArray(simbolosEntrada) ||
+      simbolosEntrada.length < 2
     )
       throw new AppError(
         400,
         "O conjunto dos símbolos de entrada é obrigatório e deve ser um vetor com, no mínimo, dois elementos."
       );
 
-    const matriz: number[][] = matrizProbab.map((linha: any) =>
+    const matrizCondicional: number[][] = matrizInput.map((linha: any) =>
       linha.map((coluna: any) => this.transformToNumber(coluna))
     );
 
-    const simbolosEntrada = simbolosEntradaComProb.map(
+    const simbolosEntradaComProb = simbolosEntrada.map(
       (item: any): SimboloComProbabilidade => ({
         probabilidade: this.transformToNumber(item.probabilidade),
         simbolo: item.simbolo,
       })
     );
 
-    if (matriz.length !== simbolosEntrada.length)
+    if (matrizCondicional.length !== simbolosEntrada.length)
       throw new AppError(
         400,
         "A matriz de probabilidades não possui a quantidade correta de linhas."
       );
 
-    if (matriz[0].length !== simbolosSaida.length)
+    if (matrizCondicional[0].length !== simbolosSaida.length)
       throw new AppError(
         400,
         "A matriz de probabilidades não possui a quantidade correta de colunas."
       );
 
     if (
-      matriz.filter((linha: number[]) => this.somatorio(linha) === 1).length !==
-      matriz.length
+      matrizCondicional.filter((linha: number[]) => this.somatorio(linha) === 1)
+        .length !== matrizCondicional.length
     )
       throw new AppError(
         400,
@@ -122,9 +179,9 @@ class Controller {
 
     return res.status(200).send(
       this.exec({
-        matriz,
+        matrizCondicional,
         simbolosSaida,
-        simbolosEntrada,
+        simbolosEntradaComProb,
       })
     );
   };

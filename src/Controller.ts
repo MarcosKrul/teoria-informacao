@@ -40,6 +40,27 @@ class Controller {
     };
   };
 
+  private somatorio = (valores: number[]): number =>
+    valores.reduce((acc, item) => acc + item, 0);
+
+  private entropiaDeProbabilidades = (probabilidades: number[]): number => {
+    const entropia = probabilidades.reduce(
+      (current, item) =>
+        current + (item > 0 ? item * Math.abs(Math.log2(item)) : 0),
+      0
+    );
+
+    if (entropia < 0)
+      throw new AppError(
+        400,
+        `A Entropia das probabilidades não pode ser negativa. H(${probabilidades.map(
+          (item) => item
+        )}) = ${entropia}`
+      );
+
+    return entropia;
+  };
+
   postRoute = async (req: Request, res: Response): Promise<Response> => {
     const {
       simbolos_entrada_com_prob: simbolosEntradaComProb,
@@ -88,6 +109,15 @@ class Controller {
       throw new AppError(
         400,
         "A matriz de probabilidades não possui a quantidade correta de colunas."
+      );
+
+    if (
+      matriz.filter((linha: number[]) => this.somatorio(linha) === 1).length !==
+      matriz.length
+    )
+      throw new AppError(
+        400,
+        "Há alguma linha na matriz com probabilidade resultante diferente de 1."
       );
 
     return res.status(200).send(

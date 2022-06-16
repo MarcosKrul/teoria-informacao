@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import path from "path";
 
 import { AppError } from "./AppError";
 import { IExec } from "./intefaces";
@@ -142,6 +143,11 @@ class Controller {
       message: "Operação realizada com sucesso.",
       content: this.entropiaDeProbabilidades(formatado),
     });
+  };
+
+  getDefault = async (_: Request, res: Response): Promise<void | Response> => {
+    const fileName = path.join(__dirname, "..", "public", "index.html");
+    return res.sendFile(fileName);
   };
 
   postRouteInfos = async (req: Request, res: Response): Promise<Response> => {

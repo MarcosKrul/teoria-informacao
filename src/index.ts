@@ -13,6 +13,7 @@ const port = process.env.PORT;
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.get("/", controller.getDefault);
 app.post("/infos", controller.postRouteInfos);
 app.post("/entropia", controller.postRouteEntropia);
 app.use(controller.errorHandler);

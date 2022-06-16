@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Teoria da Informação</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+  <script src='main.js'></script>
+</head>
+
+<body>
+  <style>
+    table > thead > tr th { border: 1px solid black }
+    table > tbody > tr td { border: 1px solid black }
+  </style>
+  
+  <h1 id="rotas">Rotas</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Rota</th>
+        <th>Método</th>
+        <th>Descrição</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>/entropia</td>
+        <td>POST</td>
+        <td>Cálculo da entropia de uma lista de probabilidades</td>
+      </tr>
+      <tr>
+        <td>/infos</td>
+        <td>POST</td>
+        <td>Cálculo das informações importantes sobre o canal</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 id="exemplo-rota-de-entropia">Exemplo rota de entropia</h2>
+  <ul>
+    <li>Corpo da requisição</li>
+  </ul>
+  <pre><code class="lang-json">  {
+    <span class="hljs-attr">"probabilidades"</span>: [
+      <span class="hljs-string">"0"</span>,
+      <span class="hljs-string">"=4/5"</span>,
+      <span class="hljs-string">"=1/5"</span>
+    ]
+  }
+  </code></pre>
+  <ul>
+    <li>Retorno</li>
+  </ul>
+  <pre><code class="lang-json">  {
+    <span class="hljs-attr">"success"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"message"</span>: <span class="hljs-string">"Operação realizada com sucesso."</span>,
+    <span class="hljs-attr">"content"</span>: <span class="hljs-number">0.7219280948873623</span>
+  }
+  </code></pre>
+  
+  <h2 id="exemplo-rota-de-informa-es-do-canal">Exemplo rota de informações do canal</h2>
+  <ul>
+    <li>Corpo da requisição</li>
+  </ul>
+  <pre><code class="lang-json">  {
+    <span class="hljs-attr">"simbolos_saida"</span>: [
+      <span class="hljs-string">"A"</span>, 
+      <span class="hljs-string">"B"</span>, 
+      <span class="hljs-string">"C"</span>
+    ],
+    <span class="hljs-attr">"simbolos_entrada_com_prob"</span>: [
+      {
+        <span class="hljs-attr">"simbolo"</span>: <span class="hljs-string">"A"</span>,
+        <span class="hljs-attr">"probabilidade"</span>: <span class="hljs-string">"=1/3"</span>
+      },
+      {
+        <span class="hljs-attr">"simbolo"</span>: <span class="hljs-string">"B"</span>,
+        <span class="hljs-attr">"probabilidade"</span>: <span class="hljs-string">"=16/27"</span>
+      },
+      {
+        <span class="hljs-attr">"simbolo"</span>: <span class="hljs-string">"C"</span>,
+        <span class="hljs-attr">"probabilidade"</span>: <span class="hljs-string">"=2/27"</span>
+      }
+    ],
+    <span class="hljs-attr">"matriz_prob_condicional"</span>: [
+      [<span class="hljs-string">""</span>, <span class="hljs-string">"=4/5"</span>, <span class="hljs-string">"=1/5"</span>],
+      [<span class="hljs-string">"=1/2"</span>, <span class="hljs-string">"=1/2"</span>, <span class="hljs-string">"0"</span>],
+      [<span class="hljs-string">"=1/2"</span>, <span class="hljs-string">"=2/5"</span>, <span class="hljs-string">"=1/10"</span>]
+    ]
+  }
+  </code></pre>
+  <ul>
+    <li>Retorno</li>
+  </ul>
+  <pre><code class="lang-json">  {
+    <span class="hljs-attr">"success"</span>: <span class="hljs-literal">true</span>,
+    <span class="hljs-attr">"message"</span>: <span class="hljs-string">"Operação realizada com sucesso."</span>,
+    <span class="hljs-attr">"content"</span>: {
+      <span class="hljs-attr">"entropiaCondicionalSaida"</span>: <span class="hljs-number">0.9340474425508749</span>,
+      <span class="hljs-attr">"entropiaConjunta"</span>: <span class="hljs-number">2.1878488331224615</span>,
+      <span class="hljs-attr">"entropiaEntrada"</span>: <span class="hljs-number">1.2538013905715868</span>,
+      <span class="hljs-attr">"equivocacaoCanal"</span>: <span class="hljs-number">0.9340474425508749</span>,
+      <span class="hljs-attr">"informacaoMutuaMedia"</span>: <span class="hljs-number">0.3197539480207119</span>
+    }
+  }
+  </code></pre>
+
+</body>
+</html>

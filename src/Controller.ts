@@ -118,7 +118,34 @@ class Controller {
     return entropia;
   };
 
-  postRoute = async (req: Request, res: Response): Promise<Response> => {
+  postRouteEntropia = async (
+    req: Request,
+    res: Response
+  ): Promise<Response> => {
+    const { probabilidades } = req.body;
+
+    if (
+      !probabilidades ||
+      !Array.isArray(probabilidades) ||
+      probabilidades.length === 0
+    )
+      throw new AppError(
+        400,
+        "Para calcular a entropia é necessário enviar um vetor de probabilidades válido."
+      );
+
+    const formatado = probabilidades.map((item: any): number =>
+      this.transformToNumber(item)
+    );
+
+    return res.status(200).send({
+      success: true,
+      message: "Operação realizada com sucesso.",
+      content: this.entropiaDeProbabilidades(formatado),
+    });
+  };
+
+  postRouteInfos = async (req: Request, res: Response): Promise<Response> => {
     const {
       simbolos_entrada_com_prob: simbolosEntrada,
       simbolos_saida: simbolosSaida,
@@ -177,13 +204,15 @@ class Controller {
         "Há alguma linha na matriz com probabilidade resultante diferente de 1."
       );
 
-    return res.status(200).send(
-      this.exec({
+    return res.status(200).send({
+      success: true,
+      message: "Operação realizada com sucesso.",
+      content: this.exec({
         matrizCondicional,
         simbolosSaida,
         simbolosEntradaComProb,
-      })
-    );
+      }),
+    });
   };
 
   errorHandler = async (

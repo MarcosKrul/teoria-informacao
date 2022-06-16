@@ -77,7 +77,7 @@ class Controller {
       )
     );
 
-    const entropiaSaidaObservadaEntrada = simbolosEntradaComProb.reduce(
+    const entropiaCondicionalSaida = simbolosEntradaComProb.reduce(
       (acc, item, index) =>
         acc +
         item.probabilidade *
@@ -85,12 +85,11 @@ class Controller {
       0
     );
 
-    const informacaoMutuaMedia =
-      entropiaEntrada - entropiaSaidaObservadaEntrada;
+    const informacaoMutuaMedia = entropiaEntrada - entropiaCondicionalSaida;
 
     return {
-      entropiaCondicionalSaida: entropiaSaidaObservadaEntrada,
-      entropiaConjunta: entropiaEntrada + entropiaSaidaObservadaEntrada,
+      entropiaCondicionalSaida,
+      entropiaConjunta: entropiaEntrada + entropiaCondicionalSaida,
       entropiaEntrada,
       equivocacaoCanal: entropiaEntrada - informacaoMutuaMedia,
       informacaoMutuaMedia,

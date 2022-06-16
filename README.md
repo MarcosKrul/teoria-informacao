@@ -66,7 +66,7 @@ Projeto realizado para a disciplina de Comunicação de Dados
       { "simbolo": "C", "probabilidade": "=2/27"  }
     ],
     "matriz_prob_condicional": [
-      ["",     "=4/5", "=1/5" ],
+      ["0",    "=4/5", "=1/5" ],
       ["=1/2", "=1/2", "0"    ],
       ["=1/2", "=2/5", "=1/10"]
     ]

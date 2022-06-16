@@ -21,24 +21,20 @@ Projeto realizado para a disciplina de Comunicação de Dados
     yarn dev:server
 ```
 
-## Rotas
+# Rotas
 
 | Rota      | Método | Descrição                              |
 |---        |---     |---                                |
 | /entropia | POST   | Cálculo da entropia de uma lista de probabilidades       |
 | /infos    | POST   | Cálculo das informações importantes sobre o canal       |
 
-# Exemplo rota de entropia
+## Exemplo rota de entropia
 
 * Corpo da requisição
 
 ```json
   {
-    "probabilidades": [
-      "0",
-      "=4/5",
-      "=1/5"
-    ]
+    "probabilidades": [ "0", "=4/5", "=1/5" ]
   }
 ```
 
@@ -48,38 +44,30 @@ Projeto realizado para a disciplina de Comunicação de Dados
   {
     "success": true,
     "message": "Operação realizada com sucesso.",
-    "content": 0.7219280948873623
+    "content": {
+      "simbolo": "H(0,0.8,0.2)",
+      "unidade": "sh/símbolo",
+      "valor": 0.7219280948873623,
+      "descricao": "H(0,0.8,0.2) = 0.72sh/símbolo"
+    }
   }
 ```
 
-# Exemplo rota de informações do canal
+## Exemplo rota de informações do canal
 
 * Corpo da requisição
 
 ```json
   {
-    "simbolos_saida": [
-      "A", 
-      "B", 
-      "C"
-    ],
+    "simbolos_saida": [ "A", "B", "C"],
     "simbolos_entrada_com_prob": [
-      {
-        "simbolo": "A",
-        "probabilidade": "=1/3"
-      },
-      {
-        "simbolo": "B",
-        "probabilidade": "=16/27"
-      },
-      {
-        "simbolo": "C",
-        "probabilidade": "=2/27"
-      }
+      { "simbolo": "A", "probabilidade": "=1/3"   },
+      { "simbolo": "B", "probabilidade": "=16/27" },
+      { "simbolo": "C", "probabilidade": "=2/27"  }
     ],
     "matriz_prob_condicional": [
-      ["", "=4/5", "=1/5"],
-      ["=1/2", "=1/2", "0"],
+      ["",     "=4/5", "=1/5" ],
+      ["=1/2", "=1/2", "0"    ],
       ["=1/2", "=2/5", "=1/10"]
     ]
   }
@@ -92,11 +80,36 @@ Projeto realizado para a disciplina de Comunicação de Dados
     "success": true,
     "message": "Operação realizada com sucesso.",
     "content": {
-      "entropiaCondicionalSaida": 0.9340474425508749,
-      "entropiaConjunta": 2.1878488331224615,
-      "entropiaEntrada": 1.2538013905715868,
-      "equivocacaoCanal": 0.9340474425508749,
-      "informacaoMutuaMedia": 0.3197539480207119
+      "entropiaCondicionalSaida": {
+        "simbolo": "H(Y|X)",
+        "unidade": "sh/símbolo",
+        "valor": 0.9340474425508749,
+        "descricao": "H(Y|X) = 0.93sh/símbolo"
+      },
+      "entropiaConjunta": {
+        "simbolo": "H(X,Y)",
+        "unidade": "sh/símbolo",
+        "valor": 2.1878488331224615,
+        "descricao": "H(X,Y) = 2.19sh/símbolo"
+      },
+      "entropiaEntrada": {
+        "simbolo": "H(X)",
+        "unidade": "sh/símbolo",
+        "valor": 1.2538013905715868,
+        "descricao": "H(X) = 1.25sh/símbolo"
+      },
+      "equivocacaoCanal": {
+        "simbolo": "H(X|Y)",
+        "unidade": "sh/símbolo",
+        "valor": 0.9340474425508749,
+        "descricao": "H(X|Y) = 0.93sh/símbolo"
+      },
+      "informacaoMutuaMedia": {
+        "simbolo": "I(X,Y)",
+        "unidade": "sh",
+        "valor": 0.3197539480207119,
+        "descricao": "I(X,Y) = 0.32sh"
+      }
     }
   }
 ```

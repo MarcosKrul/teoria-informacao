@@ -3,7 +3,11 @@ import path from "path";
 
 import { AppError } from "./AppError";
 import { IExec } from "./intefaces";
-import { MatrizProbabilidade, SimboloComProbabilidade } from "./types";
+import {
+  Grandeza,
+  MatrizProbabilidade,
+  SimboloComProbabilidade,
+} from "./types";
 
 class Controller {
   private transformToNumber = (value: string): number => {
@@ -30,6 +34,17 @@ class Controller {
 
     return Number(value);
   };
+
+  private montarDescricaoGrandeza = ({
+    simbolo,
+    unidade,
+    valor,
+  }: Grandeza): Grandeza => ({
+    simbolo,
+    unidade,
+    valor,
+    descricao: `${simbolo} = ${valor.toFixed(2)}${unidade}`,
+  });
 
   private exec: IExec = ({
     matrizCondicional,
@@ -89,11 +104,31 @@ class Controller {
     const informacaoMutuaMedia = entropiaEntrada - entropiaCondicionalSaida;
 
     return {
-      entropiaCondicionalSaida,
-      entropiaConjunta: entropiaEntrada + entropiaCondicionalSaida,
-      entropiaEntrada,
-      equivocacaoCanal: entropiaEntrada - informacaoMutuaMedia,
-      informacaoMutuaMedia,
+      entropiaCondicionalSaida: this.montarDescricaoGrandeza({
+        simbolo: "H(Y|X)",
+        unidade: "sh/símbolo",
+        valor: entropiaCondicionalSaida,
+      }),
+      entropiaConjunta: this.montarDescricaoGrandeza({
+        simbolo: "H(X,Y)",
+        unidade: "sh/símbolo",
+        valor: entropiaEntrada + entropiaCondicionalSaida,
+      }),
+      entropiaEntrada: this.montarDescricaoGrandeza({
+        simbolo: "H(X)",
+        unidade: "sh/símbolo",
+        valor: entropiaEntrada,
+      }),
+      equivocacaoCanal: this.montarDescricaoGrandeza({
+        simbolo: "H(X|Y)",
+        unidade: "sh/símbolo",
+        valor: entropiaEntrada - informacaoMutuaMedia,
+      }),
+      informacaoMutuaMedia: this.montarDescricaoGrandeza({
+        simbolo: "I(X,Y)",
+        unidade: "sh",
+        valor: informacaoMutuaMedia,
+      }),
     };
   };
 
@@ -141,7 +176,11 @@ class Controller {
     return res.status(200).send({
       success: true,
       message: "Operação realizada com sucesso.",
-      content: this.entropiaDeProbabilidades(formatado),
+      content: this.montarDescricaoGrandeza({
+        valor: this.entropiaDeProbabilidades(formatado),
+        simbolo: `H(${formatado.map((item: number): number => item)})`,
+        unidade: "sh/símbolo",
+      }),
     });
   };
 

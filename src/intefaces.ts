@@ -1,4 +1,5 @@
 import {
+  Grandeza,
   MatrizProbabilidade,
   SimboloComProbabilidade,
   Simbolos,
@@ -11,11 +12,11 @@ interface IInput {
 }
 
 interface IOutput {
-  entropiaEntrada: number;
-  entropiaCondicionalSaida: number;
-  entropiaConjunta: number;
-  equivocacaoCanal: number;
-  informacaoMutuaMedia: number;
+  entropiaEntrada: Grandeza;
+  entropiaCondicionalSaida: Grandeza;
+  entropiaConjunta: Grandeza;
+  equivocacaoCanal: Grandeza;
+  informacaoMutuaMedia: Grandeza;
 }
 
 interface IExec {

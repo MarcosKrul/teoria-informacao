@@ -161,6 +161,11 @@ class Controller {
     return entropia;
   };
 
+  getDefault = async (_: Request, res: Response): Promise<void | Response> => {
+    const fileName = path.join(__dirname, "..", "public", "index.html");
+    return res.sendFile(fileName);
+  };
+
   postRouteEntropia = async (
     req: Request,
     res: Response
@@ -192,11 +197,6 @@ class Controller {
     });
   };
 
-  getDefault = async (_: Request, res: Response): Promise<void | Response> => {
-    const fileName = path.join(__dirname, "..", "public", "index.html");
-    return res.sendFile(fileName);
-  };
-
   postRouteInfos = async (req: Request, res: Response): Promise<Response> => {
     const {
       simbolos_entrada_com_prob: simbolosEntrada,
@@ -224,8 +224,8 @@ class Controller {
         "O conjunto dos símbolos de entrada é obrigatório e deve ser um vetor com, no mínimo, dois elementos."
       );
 
-    const matrizCondicional: number[][] = matrizInput.map((linha: any) =>
-      linha.map((coluna: any) => this.transformToNumber(coluna))
+    const matrizCondicional: MatrizProbabilidade = matrizInput.map(
+      (linha: any) => linha.map((coluna: any) => this.transformToNumber(coluna))
     );
 
     const simbolosEntradaComProb = simbolosEntrada.map(

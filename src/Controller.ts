@@ -35,6 +35,9 @@ class Controller {
     return Number(value);
   };
 
+  private toPrecision = (value: number, precision = 10): number =>
+    parseFloat(value.toFixed(precision));
+
   private montarDescricaoGrandeza = ({
     simbolo,
     unidade,
@@ -73,7 +76,7 @@ class Controller {
       })
     );
 
-    const auxProbSaida = Math.round(
+    const auxProbSaida = this.toPrecision(
       this.somatorio(
         simbolosSaidaComProb.map(
           (item: SimboloComProbabilidade): number => item.probabilidade
@@ -226,6 +229,21 @@ class Controller {
         simbolo: item.simbolo,
       })
     );
+
+    if (
+      this.toPrecision(
+        this.somatorio(
+          simbolosEntradaComProb.map(
+            ({ probabilidade }: SimboloComProbabilidade): number =>
+              probabilidade
+          )
+        )
+      ) !== 1
+    )
+      throw new AppError(
+        400,
+        "A soma das probabilidades dos símbolos de entrada deve ser igual a 1."
+      );
 
     if (matrizCondicional.length !== simbolosEntrada.length)
       throw new AppError(

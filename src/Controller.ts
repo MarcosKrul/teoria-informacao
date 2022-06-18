@@ -32,7 +32,12 @@ class Controller {
       return num / den;
     }
 
-    return Number(value);
+    const cons = Number(value);
+
+    if (Number.isNaN(cons))
+      throw new AppError(400, `O elemento '${value}' não é um número válido.`);
+
+    return cons;
   };
 
   private toPrecision = (value: number, precision = 10): number =>

@@ -263,8 +263,9 @@ class Controller {
       );
 
     if (
-      matrizCondicional.filter((linha: number[]) => this.somatorio(linha) === 1)
-        .length !== matrizCondicional.length
+      matrizCondicional.filter(
+        (linha: number[]) => this.toPrecision(this.somatorio(linha)) === 1
+      ).length !== matrizCondicional.length
     )
       throw new AppError(
         400,

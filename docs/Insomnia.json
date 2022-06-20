@@ -1,1 +1,152 @@
-{"_type":"export","__export_format":4,"__export_date":"2022-06-16T13:32:56.177Z","__export_source":"insomnia.desktop.app:v2022.3.0","resources":[{"_id":"req_2e19fbe285a64e36acfa63b9bb1ffc87","parentId":"wrk_bf990b287a1647adb6aca561b0a0f368","modified":1655386357475,"created":1655386306105,"url":"{{ _.base_url }}/{% request 'name', '', 0 %}","name":"infos","description":"","method":"POST","body":{"mimeType":"application/json","text":"{\n  \"simbolos_saida\": [\n    \"A\", \n    \"B\", \n    \"C\"\n  ],\n  \"simbolos_entrada_com_prob\": [\n    {\n      \"simbolo\": \"A\",\n      \"probabilidade\": \"=1/3\"\n    },\n    {\n      \"simbolo\": \"B\",\n      \"probabilidade\": \"=16/27\"\n    },\n    {\n      \"simbolo\": \"C\",\n      \"probabilidade\": \"=2/27\"\n    }\n  ],\n  \"matriz_prob_condicional\": [\n    [\"\", \"=4/5\", \"=1/5\"],\n    [\"=1/2\", \"=1/2\", \"0\"],\n    [\"=1/2\", \"=2/5\", \"=1/10\"]\n  ]\n}"},"parameters":[],"headers":[{"name":"Content-Type","value":"application/json","id":"pair_1ef4e4a8351c4b82af2a8a9641d93f03"}],"authentication":{},"metaSortKey":-1655386306105,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"wrk_bf990b287a1647adb6aca561b0a0f368","parentId":null,"modified":1655386246382,"created":1655386246382,"name":"teoria-informacao","description":"","scope":"collection","_type":"workspace"},{"_id":"req_10c11aa91c4f400f9782303dc56cebb6","parentId":"wrk_bf990b287a1647adb6aca561b0a0f368","modified":1655386357917,"created":1655386301897,"url":"{{ _.base_url }}/{% request 'name', '', 0 %}","name":"entropia","description":"","method":"POST","body":{"mimeType":"application/json","text":"{\n  \"probabilidades\": [\n    \"0\",\n    \"=4/5\",\n    \"=1/5\"\n  ]\n}"},"parameters":[],"headers":[{"name":"Content-Type","value":"application/json","id":"pair_03dc40fda7934cfe98a0b8773073b5d4"}],"authentication":{},"metaSortKey":-1655386301897,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"env_32c77e87e212658eab707a4874e0db3b39bb1a9a","parentId":"wrk_bf990b287a1647adb6aca561b0a0f368","modified":1655386249445,"created":1655386246401,"name":"Base Environment","data":{},"dataPropertyOrder":{},"color":null,"isPrivate":false,"metaSortKey":1655386246401,"_type":"environment"},{"_id":"jar_32c77e87e212658eab707a4874e0db3b39bb1a9a","parentId":"wrk_bf990b287a1647adb6aca561b0a0f368","modified":1655386246405,"created":1655386246405,"name":"Default Jar","cookies":[],"_type":"cookie_jar"},{"_id":"spc_f76f48c96dd44d4a9f929725029e718e","parentId":"wrk_bf990b287a1647adb6aca561b0a0f368","modified":1655386246395,"created":1655386246395,"fileName":"teoria-informacao","contents":"","contentType":"yaml","_type":"api_spec"},{"_id":"env_7a0b750146da4ed2b9a1da7dabc34800","parentId":"env_32c77e87e212658eab707a4874e0db3b39bb1a9a","modified":1655386281120,"created":1655386252206,"name":"dev","data":{"base_url":"http://localhost:3333"},"dataPropertyOrder":{"&":["base_url"]},"color":"#5bda07","isPrivate":false,"metaSortKey":1655386252206,"_type":"environment"},{"_id":"env_b17b0087b3e4476e90ed8e2cc3873d2b","parentId":"env_32c77e87e212658eab707a4874e0db3b39bb1a9a","modified":1655386291182,"created":1655386256665,"name":"homolog","data":{"base_url":"https://teoria-informacao.herokuapp.com"},"dataPropertyOrder":{"&":["base_url"]},"color":"#e00b0b","isPrivate":false,"metaSortKey":1655386256665,"_type":"environment"}]}
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2022-06-16T13:32:56.177Z",
+  "__export_source": "insomnia.desktop.app:v2022.3.0",
+  "resources": [
+    {
+      "_id": "req_2e19fbe285a64e36acfa63b9bb1ffc87",
+      "parentId": "wrk_bf990b287a1647adb6aca561b0a0f368",
+      "modified": 1655386357475,
+      "created": 1655386306105,
+      "url": "{{ _.base_url }}/{% request 'name', '', 0 %}",
+      "name": "infos",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"simbolos_saida\": [\n    \"A\", \n    \"B\", \n    \"C\"\n  ],\n  \"simbolos_entrada_com_prob\": [\n    {\n      \"simbolo\": \"A\",\n      \"probabilidade\": \"=1/3\"\n    },\n    {\n      \"simbolo\": \"B\",\n      \"probabilidade\": \"=16/27\"\n    },\n    {\n      \"simbolo\": \"C\",\n      \"probabilidade\": \"=2/27\"\n    }\n  ],\n  \"matriz_prob_condicional\": [\n    [\"\", \"=4/5\", \"=1/5\"],\n    [\"=1/2\", \"=1/2\", \"0\"],\n    [\"=1/2\", \"=2/5\", \"=1/10\"]\n  ]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_1ef4e4a8351c4b82af2a8a9641d93f03"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1655386306105,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "wrk_bf990b287a1647adb6aca561b0a0f368",
+      "parentId": null,
+      "modified": 1655386246382,
+      "created": 1655386246382,
+      "name": "teoria-informacao",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "req_10c11aa91c4f400f9782303dc56cebb6",
+      "parentId": "wrk_bf990b287a1647adb6aca561b0a0f368",
+      "modified": 1655386357917,
+      "created": 1655386301897,
+      "url": "{{ _.base_url }}/{% request 'name', '', 0 %}",
+      "name": "entropia",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"probabilidades\": [\n    \"0\",\n    \"=4/5\",\n    \"=1/5\"\n  ]\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_03dc40fda7934cfe98a0b8773073b5d4"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1655386301897,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "env_32c77e87e212658eab707a4874e0db3b39bb1a9a",
+      "parentId": "wrk_bf990b287a1647adb6aca561b0a0f368",
+      "modified": 1655386249445,
+      "created": 1655386246401,
+      "name": "Base Environment",
+      "data": {},
+      "dataPropertyOrder": {},
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1655386246401,
+      "_type": "environment"
+    },
+    {
+      "_id": "jar_32c77e87e212658eab707a4874e0db3b39bb1a9a",
+      "parentId": "wrk_bf990b287a1647adb6aca561b0a0f368",
+      "modified": 1655386246405,
+      "created": 1655386246405,
+      "name": "Default Jar",
+      "cookies": [],
+      "_type": "cookie_jar"
+    },
+    {
+      "_id": "spc_f76f48c96dd44d4a9f929725029e718e",
+      "parentId": "wrk_bf990b287a1647adb6aca561b0a0f368",
+      "modified": 1655386246395,
+      "created": 1655386246395,
+      "fileName": "teoria-informacao",
+      "contents": "",
+      "contentType": "yaml",
+      "_type": "api_spec"
+    },
+    {
+      "_id": "env_7a0b750146da4ed2b9a1da7dabc34800",
+      "parentId": "env_32c77e87e212658eab707a4874e0db3b39bb1a9a",
+      "modified": 1655386281120,
+      "created": 1655386252206,
+      "name": "dev",
+      "data": {
+        "base_url": "http://localhost:3333"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url"
+        ]
+      },
+      "color": "#5bda07",
+      "isPrivate": false,
+      "metaSortKey": 1655386252206,
+      "_type": "environment"
+    },
+    {
+      "_id": "env_b17b0087b3e4476e90ed8e2cc3873d2b",
+      "parentId": "env_32c77e87e212658eab707a4874e0db3b39bb1a9a",
+      "modified": 1655386291182,
+      "created": 1655386256665,
+      "name": "homolog",
+      "data": {
+        "base_url": "https://teoria-informacao.herokuapp.com"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "base_url"
+        ]
+      },
+      "color": "#e00b0b",
+      "isPrivate": false,
+      "metaSortKey": 1655386256665,
+      "_type": "environment"
+    }
+  ]
+}

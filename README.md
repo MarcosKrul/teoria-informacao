@@ -1,5 +1,7 @@
 # Teoria da informação
 
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=https%3A%2F%2Fteoria-informacao.herokuapp.com&uri=https%3A%2F%2Fgithub.com%2FMarcosKrul%2Fteoria-informacao%2Fblob%2Fmaster%2Fdocs%2FInsomnia.json)
+
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://teoria-informacao.herokuapp.com)
 
 ## Sobre
